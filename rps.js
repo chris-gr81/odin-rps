@@ -15,22 +15,73 @@ function getHumanChoice() {
   let correct = false;
   do {
     userNumber = prompt(
-      "Type [1] for Rock, [2] for Paper or [3] for Scissor: "
-    );
-    userNumber == 1 || userNumber == 2 || userNumber == 3
+      "Type in: \n[Rock] \n[Paper] \nor [Scissor]"
+    ).toLowerCase();
+    userNumber == "rock" || userNumber == "paper" || userNumber == "scissor"
       ? (correct = false)
       : (correct = true);
   } while (correct);
 
-  switch (userNumber) {
-    case "1":
-      return "Rock";
-    case "2":
-      return "Paper";
-    case "3":
-      return "Scissor";
-  }
+  return userNumber.substring(0, 1).toUpperCase() + userNumber.substring(1);
 }
 
-console.log(getComputerChoice());
-console.log(getHumanChoice());
+function playRound(humanChoice, computerChoice) {
+  let result = "";
+  if (humanChoice == "Rock") {
+    switch (computerChoice) {
+      case "Rock":
+        result = "Rock tie!";
+        break;
+      case "Scissor":
+        result = "You win! Rock beats scissor.";
+        humanScore++;
+        break;
+      case "Paper":
+        result = "You loose! Paper beats rock.";
+        computerScore++;
+        break;
+    }
+  } else if (humanChoice == "Paper") {
+    switch (computerChoice) {
+      case "Paper":
+        result = "Paper tie!";
+        break;
+      case "Rock":
+        result = "You win! Paper beats rock.";
+        humanScore++;
+        break;
+      case "Scissor":
+        result = "You loose! Scissor beats paper.";
+        computerScore++;
+        break;
+    }
+  } else {
+    switch (computerChoice) {
+      case "Scissor":
+        result = "Scissor tie!";
+        break;
+      case "Paper":
+        result = "You win! Scissor beats paper.";
+        humanScore++;
+        break;
+      case "Rock":
+        result = "You loose! Rock beats scissor.";
+        computerScore++;
+        break;
+    }
+  }
+
+  console.log("hm: " + humanChoice);
+  console.log("pc: " + computerChoice);
+  console.log(result);
+}
+
+let humanScore = 0;
+let computerScore = 0;
+const humanSelection = getHumanChoice();
+const computerSelection = getComputerChoice();
+
+playRound(humanSelection, computerSelection);
+
+console.log("hm-score: " + humanScore);
+console.log("pc-score: " + computerScore);
